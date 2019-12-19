@@ -1019,7 +1019,11 @@ var bigInt = (function (undefined) {
         }
         return result.multiply(powersOfTwo[n]);
     };
-    NativeBigInt.prototype.shiftLeft = SmallInteger.prototype.shiftLeft = BigInteger.prototype.shiftLeft;
+    NativeBigInt.prototype.shiftLeft = function(v){
+        v = parseValue(v)
+        return new NativeBigInt(this.value << v.value)
+    }
+    SmallInteger.prototype.shiftLeft = BigInteger.prototype.shiftLeft;
 
     BigInteger.prototype.shiftRight = function (v) {
         var remQuo;
@@ -1038,7 +1042,11 @@ var bigInt = (function (undefined) {
         remQuo = divModAny(result, powersOfTwo[n]);
         return remQuo[1].isNegative() ? remQuo[0].prev() : remQuo[0];
     };
-    NativeBigInt.prototype.shiftRight = SmallInteger.prototype.shiftRight = BigInteger.prototype.shiftRight;
+    NativeBigInt.prototype.shiftRight = function (v){
+        v = parseValue(v)
+        return new NativeBigInt(this.value >> v.value)
+    }
+    SmallInteger.prototype.shiftRight = BigInteger.prototype.shiftRight;
 
     function bitwise(x, y, fn) {
         y = parseValue(y);
